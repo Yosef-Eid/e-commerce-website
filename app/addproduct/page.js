@@ -4,7 +4,7 @@ import ProductForm from './productForm.js'
 function AddProduct() {
 
 return (
-    <div className=' w-ful'>
+    <div className=' w-full'>
         <Navbar />
         <ProductForm />
     </div>
