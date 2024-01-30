@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 // import ColorPicker,  { themes }  from 'react-pick-color';
 
 // // const Profile = () => {
@@ -63,7 +63,7 @@ const Profile = () => {
 
     return <div>
 
-          </div>
+        </div>
 }
 
 export default Profile;

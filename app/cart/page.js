@@ -1,5 +1,5 @@
 
-import React, { useContext } from 'react'
+import React from 'react'
 import Navebar from '../components/Navbar.js'
 
 function Page() {

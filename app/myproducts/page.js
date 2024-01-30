@@ -1,5 +1,4 @@
-'use client'
-import { createContext } from 'vm'
+
 import Navbar from '../components/Navbar'
 import Product from './product.js'
 
