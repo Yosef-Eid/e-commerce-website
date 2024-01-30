@@ -10,11 +10,8 @@ function SignFrom() {
     })
 
     let [colorBorder, setColorBorder] = useState(true)
+    let [signin, setSignin] = useState(false)
     
-
-  
-
-
     let getData = localStorage.getItem('data');
     let email = '';
     let password = ''; 
@@ -28,14 +25,8 @@ function SignFrom() {
       else if(user.password !== password) setColorBorder(false);
 
       if(email == user.email && password == user.password){
-        console.log(true);
-        
-      }else{
-        console.log(false);
-        
+        setSignin(true)
       }
-      
-      
       
     }
 
@@ -57,10 +48,10 @@ function SignFrom() {
             <input  type="password" id='password' value={user.password} placeholder='password' onChange={(e) => setUser({...user, password: e.target.value})}
               className={` ${colorBorder !== true ? 'border-red-500' : ''} p-2 border-[1px] rounded-lg w-[300px] mb-4 focus:outline-none focus:border-gray-600 text-black`}
             />
-            <button onClick={check}
-              className='p-2 border bg-purple-600 text-white border-gray-300 mt-2 mb-4 focus:outline-none focus:border-gray-600'>
+            <Link href={signin == true ? '/' : ''} onClick={check}
+              className='p-2 border text-center bg-purple-600 text-white border-gray-300 rounded-lg mt-2 mb-4 focus:outline-none focus:border-gray-600'>
                 Register Now
-            </button>
+            </Link>
             <Link href='/signup' className='text-sm text-center mt-5 text-neutral-600'>Do not have an Account?</Link>
             <Link href='/' className='text-center mt-2 text-gray-600' >Home</Link>
         </div>

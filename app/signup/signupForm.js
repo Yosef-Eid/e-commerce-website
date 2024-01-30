@@ -2,12 +2,8 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-// import axios from "axios"
-// import { register } from 'module'
 
-type Props = {}
-
-const SignForm = (props: Props) => {
+const SignForm = () => {
     const [user, setUser] = useState({
         name:"",
         email:"",
@@ -15,6 +11,7 @@ const SignForm = (props: Props) => {
     })
 
     let [colorBorder, setColorBorder] = useState(true)
+    let [signup, setSignup] = useState(false)
 
 
 
@@ -27,8 +24,9 @@ const SignForm = (props: Props) => {
             password:user.password
         }
 
-        if(data.name && data.email && data.password !== '' && data.name.length !>= 5 && data.email.includes('@gmail.com') && data.password.length !>= 8) {
-          localStorage.setItem('data', JSON.stringify(data)) 
+        if(data.name.length >= 5 && data.email.includes('@gmail.com') && data.password.length >= 8) {
+          localStorage.setItem('data', JSON.stringify(data))
+          setSignup(true)
         }
         else setColorBorder(false)
     }
@@ -57,9 +55,9 @@ const SignForm = (props: Props) => {
             <input  type="password" id='password' value={user.password} placeholder='password' onChange={(e) => setUser({...user, password: e.target.value})}
               className= {` ${colorBorder !== true && user.password.length < 8 ?'border-red-600' : ' border-gray-300' }  p-2 border-gray-300 border-[1px] rounded-lg w-[300px] mb-4 focus:outline-none focus:bg-slate-50 text-black`}
             />
-            <button onClick={Register} className='p-2 border bg-purple-700 text-white border-gray-300 rounded-lg mt-2 mb-4 focus:outline-none hover:bg-purple-600'>
+            <Link href={signup == true ? '/' : ''} onClick={Register} className='p-2 border text-center bg-purple-700 text-white border-gray-300 rounded-lg mt-2 mb-4 focus:outline-none hover:bg-purple-600'>
                 Register Now
-            </button>
+            </Link>
             <Link href='/signin' className='text-sm text-center mt-5 text-neutral-600'>Already have an Account?</Link>
             <Link href='/' className='text-center mt-2 text-gray-600'>Home</Link>
         </div>

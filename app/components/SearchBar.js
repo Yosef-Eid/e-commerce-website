@@ -1,9 +1,7 @@
 import React from 'react'
 import {BiSearch} from "react-icons/bi"
 
-type  Props = {}
-
-function SearchBar(props: Props) {
+function SearchBar() {
   return (
     <div> 
         <div className='flex items-center  bg-gray-100 p-2 rounded-full  max-md:hidden'>
