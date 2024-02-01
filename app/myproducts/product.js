@@ -10,9 +10,7 @@ function Product() {
 
   useEffect(() => {
     // get product data from localStorage
-    let get_product_data_from_localStorage = JSON.parse(
-      localStorage.getItem('dataProduct')
-    );
+    let get_product_data_from_localStorage = JSON.parse(localStorage.getItem('dataProduct'));
     if (get_product_data_from_localStorage) {
       setProductData([...get_product_data_from_localStorage]);
       setNumberCart(JSON.parse(localStorage.getItem('numberCart')));

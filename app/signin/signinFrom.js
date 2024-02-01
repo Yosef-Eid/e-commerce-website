@@ -13,24 +13,24 @@ function SignFrom() {
     let [signin, setSignin] = useState(false)
     
   
-      if(localStorage.getItem('data')){
-        let getData = localStorage.getItem('data');
-        let email = '';
-        let password = ''; 
-        email = JSON.parse(getData).email
-        password = JSON.parse(getData).password
-      } else ''
-    let check = () => {
+    //   if(localStorage.getItem('data')){
+    //     let getData = localStorage.getItem('data');
+    //     let email = '';
+    //     let password = ''; 
+    //     email = JSON.parse(getData).email
+    //     password = JSON.parse(getData).password
+    //   } else ''
+    // let check = () => {
       
-      if(user.email !== email)  setColorBorder(false);
-      else if(user.password !== password) setColorBorder(false);
-      else ''
+    //   if(user.email !== email)  setColorBorder(false);
+    //   else if(user.password !== password) setColorBorder(false);
+    //   else ''
 
-      if(email == user.email && password == user.password){
-        setSignin(true)
-      } else ''
+    //   if(email == user.email && password == user.password){
+    //     setSignin(true)
+    //   } else ''
       
-    }
+    // }
 
   return (
     <div className='flex flex-col items-center justify-center min-h-screen py-2'>
@@ -50,7 +50,7 @@ function SignFrom() {
             <input  type="password" id='password' value={user.password} placeholder='password' onChange={(e) => setUser({...user, password: e.target.value})}
               className={` ${colorBorder !== true ? 'border-red-500' : ''} p-2 border-[1px] rounded-lg w-[300px] mb-4 focus:outline-none focus:border-gray-600 text-black`}
             />
-            <Link href={signin == true ? '/' : ''} onClick={check}
+            <Link href={signin == true ? '/' : ''} 
               className='p-2 border text-center bg-purple-600 text-white border-gray-300 rounded-lg mt-2 mb-4 focus:outline-none focus:border-gray-600'>
                 Register Now
             </Link>
