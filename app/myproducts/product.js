@@ -20,22 +20,21 @@ function Product() {
         if(get_product_data_from_localStorage){
             setProductData([...get_product_data_from_localStorage])
             setNumberCart(JSON.parse(localStorage.getItem('numberCart')))
-        } else ''
+        }
 
         let cartProduct = JSON.parse(localStorage.getItem('cart'))
         setCartStorage(cartProduct)
     },[])
 
-    if(!JSON.parse(localStorage.getItem('cart'))) localStorage.setItem('cart', JSON.stringify([]))
-    else ''
-
+    // if(!localStorage.getItem('cart')) localStorage.setItem('cart', JSON.stringify([]))
+    // else localStorage.setItem('cart', JSON.stringify([]))
     let addCart = (e) => {
-        if(JSON.parse(localStorage.getItem('cart'))){
+        if(localStorage.getItem('cart')){
         localStorage.setItem('numberCart', JSON.stringify(numberCart += 1))
-        let getTitleProduct = e.target.parentElement.parentElement.parentElement.children[0].innerHTML
+        let getTitleProduct = e.target.parentElement.parentElement.parentElement.children[1].innerHTML
         let getProductFromStorage = JSON.parse(localStorage.getItem('dataProduct'))
         let indexProduct = getProductFromStorage.findIndex((item) => item.title === getTitleProduct)
-        setIndexCart(indexProduct)
+        
         setCartStorage((items) => [...items, getProductFromStorage[indexProduct]]);
         localStorage.setItem('cart', JSON.stringify([...cartStorage, getProductFromStorage[indexProduct]]))
         }else localStorage.setItem('cart', JSON.stringify([]))
