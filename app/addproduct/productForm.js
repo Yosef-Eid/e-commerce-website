@@ -1,7 +1,9 @@
 'use client'
 import { channel } from 'process';
-import React, { useEffect, useState } from 'react'
+import Image from 'next/image';
+import React, { useEffect, useState, useCallback } from 'react'
 import ColorPicker,  { themes }  from 'react-pick-color';
+import { useDropzone } from 'react-dropzone';
 
 function ProductForm() {
 
@@ -15,7 +17,8 @@ function ProductForm() {
     let [number, setNumber] = useState(''); number < 0 ? setNumber('') : '' 
     let [price, setPrice] = useState('');   price < 0 ? setPrice('') : '' 
     let [color, setColor] = useState([])
-    let [selectedColor, setSelectedColor] = useState('')
+    let [selectedColor, setSelectedColor] = useState('') 
+    let [selectedImages, setSelectedImages] = useState([]);
     let [description, setDescription] = useState('')
 
     let [dataSaveStorage, aetDataSaveStorage ] = useState([])
@@ -45,7 +48,21 @@ function ProductForm() {
     // get data product from local storage
     useEffect(() => {
         aetDataSaveStorage(JSON.parse(localStorage.getItem('dataProduct')) || []) 
+
     },[])
+
+    const onDrop = useCallback((acceptedFiles) => {
+        const newImages = acceptedFiles.map((file) => URL.createObjectURL(file));
+
+        // Update state and save to local storage
+        setSelectedImages((prevImages) => {
+            const updatedImages = [...prevImages, ...newImages];
+            return updatedImages;
+        });
+    }, []);
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
 
     // add data product to local storage
     const addLocale = () => {
@@ -59,6 +76,7 @@ function ProductForm() {
                 number:number,
                 price:price,
                 color:color,
+                img:selectedImages,
                 description:description
             }
 
@@ -79,6 +97,7 @@ return (
                     <label htmlFor="title" className='text-[19px]'>Title</label>
                     <input type="text" name='title' value={title} id='title' placeholder='Title' onChange={(e) => setTitle(e.target.value)} className=' mt-1 p-2 w-full border-[1px]  border-gray-500 rounded-lg focus:outline-none focus:border-purple-800 '  />
                 </div>
+
                 
                 {/* input category */}
                 <div>
@@ -143,6 +162,24 @@ return (
                     </div>
                 </div>
 
+            </div>
+
+                <div {...getRootProps()} data-te-ripple-color="light" data-te-ripple-init className="  mx-auto flex-grow grid-rows-2 w-[80%] py-3 text-[14px] bg-gray-600 text-center cursor-pointer active:bg-slate-500 inline-block rounded bg-primary  font-medium uppercase leading-normal text-white shadow-[0_4px_12px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-gray-700 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                    <input {...getInputProps()} />
+                    <p>Upload product images... Or drag and drop</p> 
+                </div>
+            <div className='mx-auto flex-grow grid-rows-2 justify-items-start mt-7 w-[80%]'>
+                {selectedImages.length > 0 && (
+                    <div className=' mx-auto flex-grow grid-rows-2 justify-items-start w-[80%]'>
+                    <p className='text-start w-full'>Product Images:</p>
+                    <div className='flex items-cent
+                    er justify-center flex-wrap gap-2  '>
+                        {selectedImages.map((image, index) => (
+                        <Image key={index} src={image} width={250} height={260} alt={`Selected ${index + 1}`} className='w-[200px] h-[260px] rounded-md' />
+                        ))}
+                    </div>
+                    </div>
+                )}
             </div>
 
             <div className='mx-auto flex-grow grid-rows-2 w-[80%] pt-28'>

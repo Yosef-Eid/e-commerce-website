@@ -1,11 +1,13 @@
 
 import React from 'react'
-import Navebar from '../components/Navbar.js'
+import Navbar from '../components/Navbar.js'
+import Carts from './carts.js'
 
 function Page() {
     return (
     <div>
-        <Navebar />
+        <Navbar />
+        <Carts />
     </div>
     )
 }

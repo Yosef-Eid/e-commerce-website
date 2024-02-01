@@ -67,6 +67,14 @@ return (
                     <SearchBar />
                 </div>
 
+                {/* cart page */}
+                <Link href='/cart'>
+                    <div className='p-2 bg-gray-100 rounded-full relative'>
+                        <CiShoppingCart size={25} />
+                        <div className={`${numberCart  ? '' : 'hidden'} w-[20px] h-[20px] bg-red-600 text-[12px] text-white rounded-full text-center leading-[20px] absolute top-[-15px] right-6`}>{numberCart}</div>
+                    </div>
+                </Link>
+
                 {/* profile */}
                 <div className='relative cursor-pointer min-w-12 '>
                     {/* show profile */}
@@ -84,13 +92,6 @@ return (
                     </div>
                 </div>
 
-                {/* cart page */}
-                <Link href='/cart'>
-                    <div className='p-2 bg-gray-100 rounded-full'>
-                        <CiShoppingCart size={20} />
-                        <div className={`${numberCart !== 0 ? '' : 'hidden'} bg-red-600 text-white`}>{numberCart}</div>
-                    </div>
-                </Link>
                 {/* show nav in media screen */}
                 <PiListLight onClick={() => setShowNav(!ShowNav)} size={25} className='opacity-60 cursor-pointer min-[950px]:hidden '/>
             </div>

@@ -1,71 +1,81 @@
 'use client'
-import Image from 'next/image';
-import React from 'react';
-// import ColorPicker,  { themes }  from 'react-pick-color';
+// import React, {useCallback} from 'react'
+// import {useDropzone} from 'react-dropzone'
 
-// // const Profile = () => {
-// //   const [inputValue, setInputValue] = useState('');
-// //   const [name, setName] = useState('');
-// //   const [objectsArray, setObjectsArray] = useState([]);
+// export default function MyDropzone() {
+//   const onDrop = useCallback((acceptedFiles) => {
+//     acceptedFiles.forEach((file) => {
+//       const reader = new FileReader()
 
-// //   useEffect(() => {
+//       reader.onabort = () => console.log('file reading was aborted')
+//       reader.onerror = () => console.log('file reading has failed')
+//       reader.onload = () => {
+//       // Do whatever you want with the file contents
+//         const binaryStr = reader.result
+//         console.log(binaryStr)
+//       }
+//       reader.readAsArrayBuffer(file)
+//     })
     
-// //     const storedObjectsArray = JSON.parse(localStorage.getItem('objectsArray')) || [];
-// //     setObjectsArray(storedObjectsArray);
-// //   }, []); 
-
-// //   const handleButtonClick = () => {
-// //     if (inputValue.trim() !== '') {
-// //       const newObject = { 
-// //         color: inputValue,
-// //         name:name
-// //        };
-// //       setObjectsArray((prevArray) => [...prevArray, newObject]);
-
-      
-// //       localStorage.setItem('objectsArray', JSON.stringify([...objectsArray, newObject]));
-
-//       setInputValue('');
-//     }
-//   };
+//   }, [])
+//   const {getRootProps, getInputProps} = useDropzone({onDrop})
+//   console.log(getRootProps);                                  
 
 //   return (
-//     <div>
-//     <input
-//       type="text"
-//       value={inputValue}
-//       onChange={(e) => setInputValue(e.target.value)}
-//     />
-//     <input
-//       type="text"
-//       value={name}
-//       onChange={(e) => setName(e.target.value)}
-//     />
-//       <button onClick={handleButtonClick}>click</button>
-
-//       <div>
-//         {objectsArray.map((obj, index) => (
-//           <div key={index} >
-//             {obj.color} ==== {obj.name}
-//           </div>
-//         ))}
-//       </div>
+//     <div {...getRootProps()}>
+//       <input {...getInputProps()} />
+//       <p>Drag n drop some files here, or click to select files</p>
 //     </div>
-//   );
-// };
+//   )
+// }
+import React, { useCallback, useState, useEffect } from 'react';
+import { useDropzone } from 'react-dropzone';
 
-// export default Profile;
+export default function MyDropzone() {
+  const [selectedImages, setSelectedImages] = useState([]);
 
+  // Load selected images from local storage on component mount
+  useEffect(() => {
+    const storedImages = localStorage.getItem('selectedImages');
+    if (storedImages) {
+      setSelectedImages(JSON.parse(storedImages));
+    }
+  }, []);
 
-const Profile = () => {
+  const onDrop = useCallback((acceptedFiles) => {
+    const newImages = acceptedFiles.map((file) => URL.createObjectURL(file));
 
+    // Update state and save to local storage
+    setSelectedImages((prevImages) => {
+      const updatedImages = [...prevImages, ...newImages];
+      localStorage.setItem('selectedImages', JSON.stringify(updatedImages));
+      return updatedImages;
+    });
+  }, []);
 
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-    return <div>
+  return (
+    <div>
+      <div {...getRootProps()}>
+        <input {...getInputProps()} />
+        {isDragActive ? (
+          <p>Drop the files here ...</p>
+        ) : (
+          <p>Drag n drop some files here, or click to select files</p>
+        )}
+      </div>
 
+      {selectedImages.length > 0 && (
+        <div>
+          <p>Selected Images:</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            {selectedImages.map((image, index) => (
+              <img key={index} src={image} alt={`Selected ${index + 1}`} style={{ maxWidth: '0%', margin: '8px' }} />
+            ))}
+          </div>
         </div>
+      )}
+    </div>
+  );
 }
-
-export default Profile;
-
-x
