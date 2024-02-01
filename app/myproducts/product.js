@@ -20,13 +20,15 @@ function Product() {
         if(get_product_data_from_localStorage){
             setProductData([...get_product_data_from_localStorage])
             setNumberCart(JSON.parse(localStorage.getItem('numberCart')))
-        }
+        } else ''
 
         let cartProduct = JSON.parse(localStorage.getItem('cart'))
         setCartStorage(cartProduct)
     },[])
 
     if(!JSON.parse(localStorage.getItem('cart'))) localStorage.setItem('cart', JSON.stringify([]))
+    else ''
+
     let addCart = (e) => {
         if(JSON.parse(localStorage.getItem('cart'))){
         localStorage.setItem('numberCart', JSON.stringify(numberCart += 1))

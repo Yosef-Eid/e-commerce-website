@@ -12,21 +12,23 @@ function SignFrom() {
     let [colorBorder, setColorBorder] = useState(true)
     let [signin, setSignin] = useState(false)
     
-    let getData = localStorage.getItem('data');
-    let email = '';
-    let password = ''; 
-      if(getData){
+  
+      if(localStorage.getItem('data')){
+        let getData = localStorage.getItem('data');
+        let email = '';
+        let password = ''; 
         email = JSON.parse(getData).email
         password = JSON.parse(getData).password
-      }
+      } else ''
     let check = () => {
       
       if(user.email !== email)  setColorBorder(false);
       else if(user.password !== password) setColorBorder(false);
+      else ''
 
       if(email == user.email && password == user.password){
         setSignin(true)
-      }
+      } else ''
       
     }
 
